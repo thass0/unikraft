@@ -1,0 +1,5 @@
+$(eval $(call addlib_s,libukconsole_com,$(CONFIG_LIBUKCONSOLE_COM)))
+$(eval $(call addlib_paramprefix,libukconsole_com,com))
+
+LIBUKCONSOLE_COM_CINCLUDES-y += -I$(UK_PLAT_COMMON_BASE)/include
+LIBUKCONSOLE_COM_SRCS-y += $(LIBUKCONSOLE_COM_BASE)/com.c

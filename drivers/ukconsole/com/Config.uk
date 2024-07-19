@@ -1,0 +1,131 @@
+menuconfig LIBUKCONSOLE_COM
+	bool "COM serial port drivers"
+	depends on ARCH_X86_64
+	select LIBUKCONSOLE
+
+if LIBUKCONSOLE_COM
+menuconfig LIBUKCONSOLE_COM1
+	bool "Enable COM1 driver (0x3f8)"
+	default y
+
+if LIBUKCONSOLE_COM1
+choice
+	prompt "COM1 port baud rate"
+	default LIBUKCONSOLE_COM1_BAUD_115200
+
+config LIBUKCONSOLE_COM1_BAUD_115200
+	bool "115200"
+
+config LIBUKCONSOLE_COM1_BAUD_57600
+	bool "57600"
+
+config LIBUKCONSOLE_COM1_BAUD_38400
+	bool "38400"
+
+config LIBUKCONSOLE_COM1_BAUD_19200
+	bool "19200"
+endchoice
+endif
+
+menuconfig LIBUKCONSOLE_COM2
+	bool "Enable COM2 driver (0x2f8)"
+
+if LIBUKCONSOLE_COM2
+choice
+	prompt "COM2 port baud rate"
+	default LIBUKCONSOLE_COM2_BAUD_115200
+
+config LIBUKCONSOLE_COM2_BAUD_115200
+	bool "115200"
+
+config LIBUKCONSOLE_COM2_BAUD_57600
+	bool "57600"
+
+config LIBUKCONSOLE_COM2_BAUD_38400
+	bool "38400"
+
+config LIBUKCONSOLE_COM2_BAUD_19200
+	bool "19200"
+endchoice
+endif
+
+menuconfig LIBUKCONSOLE_COM3
+	bool "Enable COM3 driver (0x3e8)"
+
+if LIBUKCONSOLE_COM3
+choice
+	prompt "COM3 port baud rate"
+	default LIBUKCONSOLE_COM3_BAUD_115200
+
+config LIBUKCONSOLE_COM3_BAUD_115200
+	bool "115200"
+
+config LIBUKCONSOLE_COM3_BAUD_57600
+	bool "57600"
+
+config LIBUKCONSOLE_COM3_BAUD_38400
+	bool "38400"
+
+config LIBUKCONSOLE_COM3_BAUD_19200
+	bool "19200"
+endchoice
+endif
+
+menuconfig LIBUKCONSOLE_COM4
+	bool "Enable COM4 driver (0x2e8)"
+
+if LIBUKCONSOLE_COM4
+choice
+	prompt "COM4 port baud rate"
+	default LIBUKCONSOLE_COM4_BAUD_115200
+
+config LIBUKCONSOLE_COM4_BAUD_115200
+	bool "115200"
+
+config LIBUKCONSOLE_COM4_BAUD_57600
+	bool "57600"
+
+config LIBUKCONSOLE_COM4_BAUD_38400
+	bool "38400"
+
+config LIBUKCONSOLE_COM4_BAUD_19200
+	bool "19200"
+endchoice
+endif
+
+choice
+    prompt "Early COM device"
+    default LIBUKCONSOLE_COM1_EARLY
+    help
+        The early COM device will be initialized in the early
+        init table and it will have the STDIN and STDOUT flags
+        set. Other devices can still be enabled, but they won't
+        will be initialized later in the init table.
+
+config LIBUKCONSOLE_COM1_EARLY
+    bool "COM1"
+    imply LIBUKCONSOLE_COM1
+
+config LIBUKCONSOLE_COM2_EARLY
+    bool "COM2"
+    imply LIBUKCONSOLE_COM2
+
+config LIBUKCONSOLE_COM3_EARLY
+    bool "COM3"
+    imply LIBUKCONSOLE_COM3
+
+config LIBUKCONSOLE_COM4_EARLY
+    bool "COM4"
+    imply LIBUKCONSOLE_COM4
+
+config LIBUKCONSOLE_NONE_EARLY
+    bool "None"
+
+endchoice
+
+config LIBUKCONSOLE_COM_EARLY_CONSOLE
+    bool
+    default y
+    depends on LIBUKCONSOLE_COM1_EARLY || LIBUKCONSOLE_COM2_EARLY || LIBUKCONSOLE_COM3_EARLY || LIBUKCONSOLE_COM4_EARLY
+
+endif
